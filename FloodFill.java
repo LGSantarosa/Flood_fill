@@ -18,13 +18,14 @@ public class FloodFill {
             this.startPoint = new Point(x, y);
         }
 
-        public void fillWithQueue() throws InterruptedException {
+        public void fillWithQueue() throws IOException, InterruptedException {
             int backgroundColor = this.image.getRGB(startPoint.x, startPoint.y);
             Queue<Point> pixelQueue = new Queue<>();
             pixelQueue.enqueue(startPoint);
 
             int width = image.getWidth();
             int height = image.getHeight();
+            int count = 0;
 
             if(backgroundColor == newColor) return;
 
@@ -39,8 +40,12 @@ public class FloodFill {
                 }
 
                 image.setRGB(x, y, newColor);
-                panel.repaint();
-                Thread.sleep(1);
+                count++;
+
+                if(count % 100 == 0) {
+                    panel.repaint();
+                    Thread.sleep(1);
+                }
 
                 pixelQueue.enqueue(new Point(x, y - 1));
                 pixelQueue.enqueue(new Point(x, y + 1));
@@ -48,20 +53,18 @@ public class FloodFill {
                 pixelQueue.enqueue(new Point(x + 1, y));
             }
 
-            try {
-                ImageIO.write(image, "png", new File("resultado_queue.png"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            panel.repaint();
+            ImageIO.write(image, "png", new File("result_queue.png"));
         }
 
-        public void fillWithStack() throws InterruptedException {
+        public void fillWithStack() throws IOException, InterruptedException {
             int backgroundColor = this.image.getRGB(startPoint.x, startPoint.y);
             Stack<Point> pixelStack = new Stack<>();
             pixelStack.push(startPoint);
 
             int width = image.getWidth();
             int height = image.getHeight();
+            int count = 0;
 
             if(backgroundColor == newColor) return;
 
@@ -76,8 +79,12 @@ public class FloodFill {
                 }
 
                 image.setRGB(x, y, newColor);
-                panel.repaint();
-                Thread.sleep(1);
+                count++;
+
+                if(count % 100 == 0) {
+                    panel.repaint();
+                    Thread.sleep(1);
+                }
 
                 pixelStack.push(new Point(x, y - 1));
                 pixelStack.push(new Point(x, y + 1));
@@ -85,10 +92,7 @@ public class FloodFill {
                 pixelStack.push(new Point(x + 1, y));
             }
 
-            try {
-                ImageIO.write(image, "png", new File("resultado_stack.png"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            panel.repaint();
+            ImageIO.write(image, "png", new File("result_stack.png"));
         }
 }

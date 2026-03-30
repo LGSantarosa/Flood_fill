@@ -20,7 +20,7 @@ public class Main {
         Thread.sleep(300);
 
         FloodFill ff = new FloodFill(image, imagePanel, 350, 400);
-//        ff.fillWithQueue();
-        ff.fillWithStack();
+        ff.fillWithQueue();
+//        ff.fillWithStack();
     }
 }
